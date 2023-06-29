@@ -8,22 +8,22 @@ import (
 	"github.com/godbus/dbus/v5"
 )
 
-func Notify(appName, summary, description, icon string, expireTime int) {
+func Notify(appName, summary, description, icon string, expireTime int) error {
 	conn, err := dbus.SessionBusPrivate()
 	if err != nil {
 		log.Println(err)
-		return
+		return err
 	}
 	defer conn.Close()
 
 	if err = conn.Auth(nil); err != nil {
 		log.Println(err)
-		return
+		return err
 	}
 
 	if err = conn.Hello(); err != nil {
 		log.Println(err)
-		return
+		return err
 	}
 
 	n := notify.Notification{
@@ -36,4 +36,5 @@ func Notify(appName, summary, description, icon string, expireTime int) {
 	}
 
 	notify.SendNotification(conn, n)
+	return nil
 }
