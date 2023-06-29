@@ -19,3 +19,5 @@
 
 # Go workspace file
 go.work
+/notify.go~
+/notify_test.go~
